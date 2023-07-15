@@ -1,4 +1,49 @@
 <app-navbar></app-navbar>
 <div class="container">
-  <app-users></app-users>
+  <div class="row">
+    <div class="accordion" id="accordionExample" *ngFor="let user of portabilidade.origem.users; let i = index">
+      <div class="accordion-item">
+          <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Nome: {{ user.name }}
+          </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <app-users [user]="user" (publishEvent)="getUserData($event)"></app-users>
+            </div>
+          </div>
+      </div>
+  </div>
+  <hr class="space-content">
+  <div class="row">
+    <div class="mx-auto table-info">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Quer ser informado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let people of portabilidade.origem.users; let i = index">
+            <th scope="row">{{ i+1 }}</th>
+            <td>{{ people.name }}</td>
+            <td>{{ people.email }}</td>
+            <td>{{ people.wantInfo ? 'Sim' : 'Não' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <button type="button" class="btn btn-primary" (click)="addUser()">Adicionar usuário</button>
+    </div>
+    <div class="col-6">
+      <button type="button" class="btn btn-primary" (click)="toHire()">Contratar portabilidade</button>
+    </div>
+  </div>
 </div>

@@ -1,15 +1,19 @@
-<form>
+<div>
     <div class="form-group">
         <label for="exampleInputName">Nome</label>
-        <input type="text" class="form-control" id="exampleInputName" placeholder="Digite o nome">
+        <input type="text" list="suggested-user-list" class="form-control" id="exampleInputName" placeholder="Digite o nome" [(ngModel)]="user.name">
+
+        <datalist id="suggested-user-list">
+            <option *ngFor="let user of suggestedUserList" value="{{ user }}"></option>
+        </datalist>
     </div>
     <div class="form-group">
         <label for="exampleInputEmail1">E-mail</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail" [(ngModel)]="user.email">
     </div>
     <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="user.wantInfo">
         <label class="form-check-label" for="exampleCheck1">Quero ser informado</label>
     </div>
-    <button type="button" class="btn btn-primary">Submit</button>
-</form>
+    <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+</div>
