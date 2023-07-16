@@ -12,33 +12,35 @@ export class AppComponent implements OnInit {
 
   portabilidade: IPortability;
 
-  private userList: Array<IUser> = [];
-
   ngOnInit() {
-    this.addUser();
     this.portabilidade = {
       origem: {
-        users: this.userList
+        users: []
       }
     }
+    this.addUser();
   }
   
   public addUser() {
-    this.userList.push({
-      name: '',
-      email: '',
-      wantInfo: false,
-      uuid: uuid()
-    });
+    this.portabilidade
+      .origem
+        .users
+          .push({
+            name: '',
+            email: '',
+            wantInfo: false,
+            uuid: uuid()
+          });
   }
 
   private handleUserData(user: IUser) {
-    console.log('user data: ', user, this.userList);
-    this.userList.forEach(u => {
+    this.portabilidade.origem.users = this.portabilidade.origem.users.map(u => {
       if (u.uuid == user.uuid) {
         u = user;
       }
+      return u;
     });
+    console.log('user data: ', user, this.portabilidade.origem.users);
   }
 
   getUserData(user: IUser) {

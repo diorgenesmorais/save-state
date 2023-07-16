@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersComponent } from './users.component';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [UsersComponent],
   imports: [
     CommonModule,
-    FormsModule
+    ReactiveFormsModule
   ],
   exports: [
     UsersComponent

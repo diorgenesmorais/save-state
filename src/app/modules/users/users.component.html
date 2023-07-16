@@ -1,7 +1,7 @@
-<div>
+<form [formGroup]="form">
     <div class="form-group">
         <label for="exampleInputName">Nome</label>
-        <input type="text" list="suggested-user-list" class="form-control" id="exampleInputName" placeholder="Digite o nome" [(ngModel)]="user.name">
+        <input type="text" list="suggested-user-list" class="form-control" id="exampleInputName" placeholder="Digite o nome" formControlName="NOME" >
 
         <datalist id="suggested-user-list">
             <option *ngFor="let user of suggestedUserList" value="{{ user }}"></option>
@@ -9,11 +9,11 @@
     </div>
     <div class="form-group">
         <label for="exampleInputEmail1">E-mail</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail" [(ngModel)]="user.email">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail" formControlName="EMAIL">
     </div>
     <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="user.wantInfo">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="WANT_INFO">
         <label class="form-check-label" for="exampleCheck1">Quero ser informado</label>
     </div>
-    <button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
-</div>
+    <button type="button" class="btn btn-primary" *ngIf="form && form.valid" (click)="save()">Salvar</button>
+</form>
