@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { NavbarModule } from './modules/navbar/navbar.module';
 import { RouterModule } from '@angular/router';
 import { CoreRoutingModule } from './modules/core-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { AppReducers } from './core/store/app.reducers';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { CoreRoutingModule } from './modules/core-routing.module';
     AppRoutingModule,
     NavbarModule,
     RouterModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    StoreModule.forRoot(AppReducers)
   ],
   providers: [],
   bootstrap: [AppComponent]

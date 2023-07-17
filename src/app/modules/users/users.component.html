@@ -15,5 +15,12 @@
         <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="WANT_INFO">
         <label class="form-check-label" for="exampleCheck1">Quero ser informado</label>
     </div>
-    <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Salvar</button>
+    <div class="row">
+        <div class="col-11">
+            <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Salvar</button>
+        </div>
+        <div class="col-1">
+            <button type="button" class="btn" (click)="remove()"><i class="bi bi-trash"></i></button>
+        </div>
+    </div>
 </form>

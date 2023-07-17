@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TransferFacade } from 'src/app/core/services/transfer.facade';
 
 @Component({
   selector: 'app-users',
@@ -17,7 +18,8 @@ export class UsersComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private formBuild: FormBuilder
+    private formBuild: FormBuilder,
+    private transferFacade: TransferFacade
   ) { }
 
   ngOnInit() {
@@ -40,5 +42,9 @@ export class UsersComponent implements OnInit {
       wantInfo: this.form.controls.WANT_INFO.value
     }
     this.publishEvent.emit(this.user);
+  }
+
+  public remove() {
+    this.transferFacade.removeUser(this.user);
   }
 }
