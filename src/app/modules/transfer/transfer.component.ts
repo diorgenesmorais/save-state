@@ -43,4 +43,8 @@ export class TransferComponent implements OnInit, OnDestroy {
     this.unsub$.complete();
     console.log('on destroy transfer component');
   }
+
+  public addUser() {
+    this.transferFacade.createUser();
+  }
 }
