@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { IPortability } from '../interfaces/portabilidade.interface';
-import { v4 as uuid } from 'uuid';
-import { IUser } from '../interfaces/user.interface';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -30,10 +28,6 @@ export class TransferComponent implements OnInit, OnDestroy {
     this.transferFacade.createUser();
   }
   
-  getUserData(user: IUser) {
-    this.transferFacade.saveUser(user);
-  }
-
   toHire() {
     console.log('Portabilidade: ', this.portabilidade);
   }

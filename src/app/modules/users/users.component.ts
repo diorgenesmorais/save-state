@@ -1,18 +1,20 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
-  @Input() user: IUser;
-
-  @Output() publishEvent = new EventEmitter<IUser>();
+  @Input() uuid: string;
+  private user: IUser;
+  private unsub$ = new Subject();
 
   suggestedUserList = ['Diorgenes', 'Laudeci', 'Deyvison'];
   form: FormGroup;
@@ -23,14 +25,23 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.transferFacade.users$
+      .pipe(takeUntil(this.unsub$))
+      .subscribe(users => {
+        this.user = users.find(u => u.uuid == this.uuid);
+      });
     this.formControll();
+  }
+
+  private getValueField(field: string) {
+    return this.user && this.user[field] ? this.user[field] : '';
   }
 
   private formControll() {
     this.form = this.formBuild.group({
-      NOME: [this.user.name, Validators.required],
-      EMAIL: [this.user.email, [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
-      WANT_INFO: [this.user.wantInfo]
+      NOME: [this.getValueField('name'), Validators.required],
+      EMAIL: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
+      WANT_INFO: [this.getValueField('wantInfo')]
     });
   }
 
@@ -41,10 +52,17 @@ export class UsersComponent implements OnInit {
       email: this.form.controls.EMAIL.value,
       wantInfo: this.form.controls.WANT_INFO.value
     }
-    this.publishEvent.emit(this.user);
+    this.transferFacade.saveUser(this.user);
   }
 
   public remove() {
     this.transferFacade.removeUser(this.user);
+  }
+
+  ngOnDestroy() {
+    this.unsub$.next();
+    this.unsub$.complete();
+    // TODO: por que é destruido apenas o componente atual ao clicar em salvar?
+    console.log('users.component destroy ', this.user);
   }
 }

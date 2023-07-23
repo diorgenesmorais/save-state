@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store, select } from "@ngrx/store";
 import { TransferState } from "../store/states/transfer.state";
-import { getPortabilidadeState } from "../store/selectors/transfer.selector";
+import { getPortabilidadeState, getUsers } from "../store/selectors/transfer.selector";
 import { IUser } from "src/app/modules/interfaces/user.interface";
 import { CreateUserTransfer, SaveUserTransfer, RemoveUserTransfer } from "../store/actions/transfer.action";
 
@@ -10,6 +10,7 @@ import { CreateUserTransfer, SaveUserTransfer, RemoveUserTransfer } from "../sto
 })
 export class TransferFacade {
     public portabilidadeState$ = this.store.pipe(select(getPortabilidadeState));
+    public users$ = this.store.pipe(select(getUsers));
 
     constructor(
         private store: Store<TransferState>
