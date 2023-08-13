@@ -1,15 +1,16 @@
 <form [formGroup]="form">
     <div class="form-group">
         <label for="exampleInputName">Nome</label>
-        <input type="text" list="suggested-user-list" class="form-control" id="exampleInputName" placeholder="Digite o nome" formControlName="NOME" >
-
+        <input type="text" list="suggested-user-list" class="form-control" [ngClass]="{'alert-error': form.controls.NOME.errors}" id="exampleInputName" placeholder="Digite o nome" formControlName="NOME" >
+        <span class="alert-error" *ngIf="form.controls.NOME.errors">Campo é obrigatório</span>
         <datalist id="suggested-user-list">
             <option *ngFor="let user of suggestedUserList" value="{{ user }}"></option>
         </datalist>
     </div>
     <div class="form-group">
         <label for="exampleInputEmail1">E-mail</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail" formControlName="EMAIL">
+        <input type="email" class="form-control" id="exampleInputEmail1" [ngClass]="{'alert-error': form.controls.EMAIL.errors}" aria-describedby="emailHelp" placeholder="Informe o e-mail" formControlName="EMAIL">
+        <span class="alert-error" *ngIf="form.controls.EMAIL.errors">Campo é obrigatório</span>
     </div>
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="WANT_INFO">

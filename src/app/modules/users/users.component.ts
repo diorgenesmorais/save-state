@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   private user: IUser;
   private unsub$ = new Subject();
 
-  suggestedUserList = ['Diorgenes', 'Laudeci', 'Deyvison'];
+  suggestedUserList: ReadonlyArray<string> = ['Diorgenes', 'Laudeci', 'Deyvison'];
   form: FormGroup;
 
   constructor(
