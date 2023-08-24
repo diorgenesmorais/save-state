@@ -62,7 +62,5 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsub$.next();
     this.unsub$.complete();
-    // TODO: por que é destruido apenas o componente atual ao clicar em salvar?
-    console.log('users.component destroy ', this.user);
   }
 }
