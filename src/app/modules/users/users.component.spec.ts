@@ -1,25 +1,53 @@
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { StoreMock } from 'src/app/mocks/store-mock';
-import { TransferState } from 'src/app/core/store/states/transfer.state';
-import { FormBuilderMock } from 'src/app/mocks/formBuilder-mock';
+import { FormBuilder, Validators } from '@angular/forms';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { AppReducers } from 'src/app/core/store/app.reducers';
+import { IUser } from '../interfaces/user.interface';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
+  let fixture: ComponentFixture<UsersComponent>;
+  let transferFacade: TransferFacade;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UsersComponent ]
+      imports: [
+        StoreModule.forRoot(AppReducers)
+      ],
+      declarations: [ UsersComponent ],
+      providers: [
+        FormBuilder
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
-    const formBuilder = new FormBuilderMock();
-    const transferFacade = new TransferFacade(new StoreMock<TransferState>());
-    component = new UsersComponent(formBuilder, transferFacade);
+    fixture = TestBed.createComponent(UsersComponent);
+    transferFacade = fixture.debugElement.injector.get(TransferFacade);
+    component = fixture.componentInstance;
   }));
 
   it('should create', () => {
+    component.ngOnInit();
+
     expect(component).toBeTruthy();
+  });
+
+  it('should save informed user', () => {
+    component.ngOnInit();
+
+    spyOn(transferFacade, 'saveUser');
+
+    expect(transferFacade.saveUser)
+      .withContext('antes de chamar save no componente')
+      .not.toHaveBeenCalled();
+
+    component.save();
+    expect(transferFacade.saveUser)
+      .withContext('após chamar save')
+      .toHaveBeenCalled();
   });
 });

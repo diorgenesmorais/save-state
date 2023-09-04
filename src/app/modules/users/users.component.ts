@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 export class UsersComponent implements OnInit, OnDestroy {
 
   @Input() uuid: string;
-  private user: IUser;
+  public user: IUser;
   private unsub$ = new Subject();
 
   suggestedUserList: ReadonlyArray<string> = ['Diorgenes', 'Laudeci', 'Deyvison'];
@@ -43,6 +43,14 @@ export class UsersComponent implements OnInit, OnDestroy {
       EMAIL: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
       WANT_INFO: [this.getValueField('wantInfo')]
     });
+
+    this.form.controls.NOME.valueChanges
+      .pipe(takeUntil(this.unsub$))
+      .subscribe(value => {
+        if (value) {
+          this.form.controls.NOME.setValue(value.toUpperCase());
+        }
+      })
   }
 
   public save() {

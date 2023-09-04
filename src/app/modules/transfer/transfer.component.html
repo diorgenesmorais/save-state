@@ -38,6 +38,13 @@
     </div>
   </div>
   <div class="row">
+    <ul>
+      <ng-template ngFor let-item [ngForOf]="portabilidade.origem.users">
+        <li>{{ item.name }}</li>
+      </ng-template>
+    </ul>
+  </div>
+  <div class="row">
     <div class="col-6">
       <button type="button" class="btn btn-primary" (click)="addUser()">Adicionar usuário</button>
     </div>

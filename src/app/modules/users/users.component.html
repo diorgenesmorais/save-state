@@ -1,7 +1,7 @@
 <form [formGroup]="form">
     <div class="form-group">
         <label for="exampleInputName">Nome</label>
-        <input type="text" list="suggested-user-list" class="form-control" [ngClass]="{'alert-error': form.controls.NOME.errors}" id="exampleInputName" placeholder="Digite o nome" formControlName="NOME" >
+        <input type="text" id="nome" list="suggested-user-list" class="form-control" id="exampleInputName" placeholder="Digite o nome" formControlName="NOME" checkFieldError >
         <span class="alert-error" *ngIf="form.controls.NOME.errors">Campo é obrigatório</span>
         <datalist id="suggested-user-list">
             <option *ngFor="let user of suggestedUserList" value="{{ user }}"></option>
