@@ -1,0 +1,18 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Quer ser informado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let people of users; let i = index">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ people.name }}</td>
+        <td>{{ people.email }}</td>
+        <td>{{ people.wantInfo ? 'Sim' : 'Não' }}</td>
+        </tr>
+    </tbody>
+</table>

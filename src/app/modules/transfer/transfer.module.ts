@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { TransferComponent } from './transfer.component';
 import { UsersModule } from '../users/users.module';
 import { ListFilterPipe } from '../../pipes/list-filter.pipe';
+import { ViewListModule } from '../view-list/view-list.module';
 
 @NgModule({
   declarations: [TransferComponent, ListFilterPipe],
   imports: [
     CommonModule,
-    UsersModule
+    UsersModule,
+    ViewListModule
   ],
   exports: [TransferComponent]
 })
