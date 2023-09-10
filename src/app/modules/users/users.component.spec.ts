@@ -2,10 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { AppReducers } from 'src/app/core/store/app.reducers';
+import { MessageComponent } from './message/message.component';
 
 fdescribe('UsersComponent', () => {
   let component: UsersComponent;
@@ -58,4 +59,12 @@ fdescribe('UsersComponent', () => {
 
     expect(component.form.valid).toBeTruthy();
   });
+
+  it('deve obter uma mensagem', () => {
+    component.ngOnInit();
+    const messageDispatch = new MessageComponent();
+    messageDispatch.control = component.forms.CPF as FormControl;
+
+    expect(messageDispatch.getMessage()).toBe('CPF inválido!');
+  })
 });

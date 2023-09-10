@@ -40,20 +40,17 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   private formControll() {
     this.form = this.formBuild.group({
-      NOME: [this.getValueField('name'), Validators.required],
-      EMAIL: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
-      CPF: [this.getValueField('cpf'), FormValidations.validateCpf],
-      WANT_INFO: [this.getValueField('wantInfo')]
+      name: [this.getValueField('name'), Validators.required],
+      email: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
+      cpf: [this.getValueField('cpf'), FormValidations.validateCpf],
+      wantInfo: [this.getValueField('wantInfo')]
     });
   }
 
   public save() {
     this.user = {
       ...this.user,
-      name: this.form.controls.NOME.value,
-      cpf: this.form.controls.CPF.value,
-      email: this.form.controls.EMAIL.value,
-      wantInfo: this.form.controls.WANT_INFO.value
+      ...this.form.value
     }
     this.transferFacade.saveUser(this.user);
   }
