@@ -16,6 +16,14 @@
   </div>
   <hr class="space-content">
   <div class="row">
+    <div class="form-group">
+      <div class="col-md-6">
+        <label for="fieldSearch">Filtro</label>
+        <input type="text" id="fieldSearch" class="form-control" #fieldSearch>
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="mx-auto table-info">
       <table class="table table-striped">
         <thead>
@@ -27,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let people of portabilidade.origem.users; let i = index">
+          <tr *ngFor="let people of (users | listFilter : filterText); let i = index">
             <th scope="row">{{ i+1 }}</th>
             <td>{{ people.name }}</td>
             <td>{{ people.email }}</td>
@@ -39,7 +47,7 @@
   </div>
   <div class="row">
     <ul>
-      <ng-template ngFor let-item [ngForOf]="portabilidade.origem.users">
+      <ng-template ngFor let-item [ngForOf]="portabilidade.origem.users | listFilter : filterText">
         <li>{{ item.name }}</li>
       </ng-template>
     </ul>

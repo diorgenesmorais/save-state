@@ -1,18 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { IPortability } from '../interfaces/portabilidade.interface';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, fromEvent } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transfer',
   templateUrl: './transfer.component.html',
   styleUrls: ['./transfer.component.scss']
 })
-export class TransferComponent implements OnInit, OnDestroy {
+export class TransferComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('fieldSearch', { static: false }) fieldSearch: ElementRef<HTMLInputElement>;
 
   portabilidade: IPortability;
   private unsub$ = new Subject();
+  public filterText: string;
   
   constructor(
     private transferFacade: TransferFacade
@@ -40,5 +43,17 @@ export class TransferComponent implements OnInit, OnDestroy {
 
   public addUser() {
     this.transferFacade.createUser();
+  }
+
+  get users() {
+    return this.portabilidade.origem.users;
+  }
+
+  ngAfterViewInit(): void {
+      fromEvent(this.fieldSearch.nativeElement, 'keyup')
+        .pipe(takeUntil(this.unsub$), debounceTime(500))
+        .subscribe((e: Event) => {
+          this.filterText = (e.target as HTMLInputElement).value;
+        });
   }
 }
