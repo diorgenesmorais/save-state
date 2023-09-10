@@ -10,9 +10,9 @@ describe('ListFilterPipe', () => {
   it('should filtered', () => {
     const pipe = new ListFilterPipe();
     const users: IUser[] = [
-      { name: 'Diorgenes', email: 'diorgenes@gmail.com', wantInfo: true },
-      { name: 'Laudeci', email: 'laudeci@gmail.com', wantInfo: false },
-      { name: 'Deyvison', email: 'deyvison@gmail.com', wantInfo: true },
+      { name: 'Diorgenes', cpf: '', email: 'diorgenes@gmail.com', wantInfo: true },
+      { name: 'Laudeci', cpf: '', email: 'laudeci@gmail.com', wantInfo: false },
+      { name: 'Deyvison', cpf: '', email: 'deyvison@gmail.com', wantInfo: true },
     ]
 
     const filtered = pipe.transform(users, 'laudeci');

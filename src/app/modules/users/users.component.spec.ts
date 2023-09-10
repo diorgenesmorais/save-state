@@ -7,7 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { AppReducers } from 'src/app/core/store/app.reducers';
 
-describe('UsersComponent', () => {
+fdescribe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   let transferFacade: TransferFacade;
@@ -48,5 +48,14 @@ describe('UsersComponent', () => {
     expect(transferFacade.saveUser)
       .withContext('após chamar save')
       .toHaveBeenCalled();
+  });
+
+  it('deve ser um formulário válido', () => {
+    component.ngOnInit();
+    component.form.controls.NOME.setValue('Diorgenes');
+    component.form.controls.CPF.setValue('00725580321');
+    component.form.controls.EMAIL.setValue('diorgenes@gmail.com');
+
+    expect(component.form.valid).toBeTruthy();
   });
 });

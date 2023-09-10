@@ -18,6 +18,7 @@ export function transferReducer(
                             ...state.portabilidade.origem.users,
                             {
                                 name: '',
+                                cpf: '',
                                 email: '',
                                 wantInfo: false,
                                 uuid: uuid()

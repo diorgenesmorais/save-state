@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FormValidations } from 'src/app/shared/form-validations';
 
 @Component({
   selector: 'app-users',
@@ -41,6 +42,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.form = this.formBuild.group({
       NOME: [this.getValueField('name'), Validators.required],
       EMAIL: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
+      CPF: [this.getValueField('cpf'), FormValidations.validateCpf],
       WANT_INFO: [this.getValueField('wantInfo')]
     });
   }
@@ -49,6 +51,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.user = {
       ...this.user,
       name: this.form.controls.NOME.value,
+      cpf: this.form.controls.CPF.value,
       email: this.form.controls.EMAIL.value,
       wantInfo: this.form.controls.WANT_INFO.value
     }

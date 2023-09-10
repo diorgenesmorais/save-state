@@ -8,6 +8,11 @@
         </datalist>
     </div>
     <div class="form-group">
+        <label for="cpfInput">CPF</label>
+        <input type="text" class="form-control" id="cpfInput" placeholder="Digite o CPF" formControlName="CPF" name="CPF"  >
+        <app-message [control]="forms.CPF"></app-message>
+    </div>
+    <div class="form-group">
         <label for="exampleInputEmail1">E-mail</label>
         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Informe o e-mail" formControlName="EMAIL">
         <app-message [control]="forms.EMAIL"></app-message>
