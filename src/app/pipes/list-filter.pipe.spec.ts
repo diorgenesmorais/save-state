@@ -1,7 +1,7 @@
 import { IUser } from '../modules/interfaces/user.interface';
 import { ListFilterPipe } from './list-filter.pipe';
 
-fdescribe('ListFilterPipe', () => {
+describe('ListFilterPipe', () => {
   it('create an instance', () => {
     const pipe = new ListFilterPipe();
     expect(pipe).toBeTruthy();

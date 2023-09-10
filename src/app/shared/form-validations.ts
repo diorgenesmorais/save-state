@@ -1,4 +1,5 @@
-import { Validators } from "@angular/forms";
+import { AbstractControl, Validators } from "@angular/forms";
+import { Validations } from "./validations";
 
 export class FormValidations extends Validators {
     static getErrorMessage(
@@ -6,9 +7,14 @@ export class FormValidations extends Validators {
     ) {
         const configMessage = {
             required: 'Campo é obrigatório',
-            pattern: 'Campo inválido'
+            pattern: 'Campo inválido',
+            cpfInvalid: 'CPF inválido!'
         }
 
         return configMessage[checktorName];
+    }
+
+    static validateCpf = (control: AbstractControl) => {
+        return Validations.isCpfInvalid(control.value) ? { cpfInvalid: true } : null;
     }
 }
