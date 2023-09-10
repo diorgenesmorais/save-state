@@ -2,11 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { AppReducers } from 'src/app/core/store/app.reducers';
-import { IUser } from '../interfaces/user.interface';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;

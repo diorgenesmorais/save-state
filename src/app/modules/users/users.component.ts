@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -43,14 +43,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       EMAIL: [this.getValueField('email'), [Validators.required, Validators.pattern(/[\w-]+@([\w-]+\.)+[\w-]+/)]],
       WANT_INFO: [this.getValueField('wantInfo')]
     });
-
-    this.form.controls.NOME.valueChanges
-      .pipe(takeUntil(this.unsub$))
-      .subscribe(value => {
-        if (value) {
-          this.form.controls.NOME.setValue(value.toUpperCase());
-        }
-      })
   }
 
   public save() {
@@ -70,5 +62,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsub$.next();
     this.unsub$.complete();
+  }
+
+  get forms() {
+    return this.form.controls;
   }
 }
