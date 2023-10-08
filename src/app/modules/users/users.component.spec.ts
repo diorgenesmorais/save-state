@@ -30,6 +30,13 @@ fdescribe('UsersComponent', () => {
     component = fixture.componentInstance;
   }));
 
+  const setFormValues = () => {
+    component.ngOnInit();
+    component.forms.name.setValue('Diorgenes');
+    component.forms.cpf.setValue('00725580321');
+    component.forms.email.setValue('diorgenes@gmail.com');
+  }
+
   it('should create', () => {
     component.ngOnInit();
 
@@ -52,10 +59,7 @@ fdescribe('UsersComponent', () => {
   });
 
   it('deve ser um formulário válido', () => {
-    component.ngOnInit();
-    component.form.controls.NOME.setValue('Diorgenes');
-    component.form.controls.CPF.setValue('00725580321');
-    component.form.controls.EMAIL.setValue('diorgenes@gmail.com');
+    setFormValues();
 
     expect(component.form.valid).toBeTruthy();
   });
@@ -63,8 +67,16 @@ fdescribe('UsersComponent', () => {
   it('deve obter uma mensagem', () => {
     component.ngOnInit();
     const messageDispatch = new MessageComponent();
-    messageDispatch.control = component.forms.CPF as FormControl;
+    messageDispatch.control = component.forms.cpf as FormControl;
+    component.form.markAllAsTouched();
 
     expect(messageDispatch.getMessage()).toBe('CPF inválido!');
-  })
+  });
+
+  it('deve ser um formulário inválido', () => {
+    setFormValues();
+    component.forms.cpf.setValue('');
+
+    expect(component.form.invalid).toBeTruthy();
+  });
 });

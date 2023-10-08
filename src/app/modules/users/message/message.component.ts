@@ -1,11 +1,12 @@
-import { AfterContentChecked, Component, Input } from '@angular/core';
+import { AfterContentChecked, AfterViewChecked, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { FormValidations } from 'src/app/shared/form-validations';
 
 @Component({
   selector: 'app-message',
   template: `
-    <span class="alert-error" *ngIf="hasError">{{ text }}</span>
+    <span class="alert-error" *ngIf="hasError">{{ message$ | async }}</span>
   `,
   styles: [`
     span.alert-error {
@@ -18,7 +19,8 @@ export class MessageComponent implements AfterContentChecked {
   
   @Input() control: FormControl;
 
-  text: string;
+  private subjectText = new BehaviorSubject<string>('');
+  message$ = this.subjectText.asObservable();
 
   get hasError() {
     return this.control.hasError && this.control.touched;
@@ -42,7 +44,13 @@ export class MessageComponent implements AfterContentChecked {
     return '';
   }
 
-  ngAfterContentChecked(): void {
-    this.text = this.getMessage();
+  subjectMessage() {
+    const text = this.getMessage();
+    this.subjectText.next(text);
   }
+
+  ngAfterContentChecked(): void {
+    this.subjectMessage();
+  }
+
 }
