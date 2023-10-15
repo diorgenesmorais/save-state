@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormValidations } from 'src/app/shared/form-validations';
 
@@ -27,7 +27,10 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.transferFacade.users$
-      .pipe(takeUntil(this.unsub$))
+      .pipe(
+        takeUntil(this.unsub$),
+        finalize(() => console.log('desinscreveu'))
+      )
       .subscribe(users => {
         this.user = users.find(u => u.uuid == this.uuid);
       });
