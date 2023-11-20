@@ -1,34 +1,35 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IUser } from '../interfaces/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TransferFacade } from 'src/app/core/services/transfer.facade';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { FormValidations } from 'src/app/shared/form-validations';
+import { SubDestroyService } from 'src/app/core/services/sub-destroy.service';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  providers: [SubDestroyService]
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit {
 
   @Input() uuid: string;
   public user: IUser;
-  private unsub$ = new Subject();
 
   suggestedUserList: ReadonlyArray<string> = ['Diorgenes', 'Laudeci', 'Deyvison'];
   form: FormGroup;
 
   constructor(
     private formBuild: FormBuilder,
-    private transferFacade: TransferFacade
+    private transferFacade: TransferFacade,
+    private destroy$: SubDestroyService
   ) { }
 
   ngOnInit() {
     this.transferFacade.users$
       .pipe(
-        takeUntil(this.unsub$),
+        takeUntil(this.destroy$),
         finalize(() => console.log('desinscreveu'))
       )
       .subscribe(users => {
@@ -60,11 +61,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   public remove() {
     this.transferFacade.removeUser(this.user);
-  }
-
-  ngOnDestroy() {
-    this.unsub$.next();
-    this.unsub$.complete();
   }
 
   get forms() {
