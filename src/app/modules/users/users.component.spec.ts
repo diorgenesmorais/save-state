@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { AppReducers } from 'src/app/core/store/app.reducers';
 import { MessageComponent } from './message/message.component';
 
-fdescribe('UsersComponent', () => {
+describe('UsersComponent', () => {
   let component: UsersComponent;
   let fixture: ComponentFixture<UsersComponent>;
   let transferFacade: TransferFacade;

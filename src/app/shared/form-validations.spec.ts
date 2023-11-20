@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms"
 import { FormValidations } from "./form-validations";
 
-fdescribe('FormValidations', () => {
+describe('FormValidations', () => {
     let form: FormGroup;
 
     beforeEach(() => {
